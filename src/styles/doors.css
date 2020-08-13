@@ -41,3 +41,14 @@
     width:  50%;
   }
 }
+.doors-main-div {
+  position: relative;
+}
+.hallway {
+  height: 1000px;
+  width: 1000px;
+  z-index: -1;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
