@@ -12,6 +12,7 @@ export default class Panel extends Component {
       floorsPressed: [],
       open: false,
       moving: false,
+      message: null
     };
 
     this.addFloor = this.addFloor.bind(this);
@@ -65,7 +66,7 @@ export default class Panel extends Component {
       this.state.floorsPressed[0] === "L" ? "0" : this.state.floorsPressed[0];
 
     if (currentFloor.toString() === destinationFloor) {
-      this.setState({ floorsPressed: this.state.floorsPressed.slice(1) });
+      this.setState({ floorsPressed: this.state.floorsPressed.slice(1), message: "You Have Arrived" });
       this.openDoors();
     } else {
       if (destinationFloor > currentFloor) {
@@ -101,7 +102,7 @@ export default class Panel extends Component {
     rightDoor.classList.remove("open");
     leftDoor.classList.add("close");
     rightDoor.classList.add("close");
-
+    this.setState({message: false})
     setTimeout(() => {
       this.nextFloor();
     }, 4000);
@@ -112,7 +113,10 @@ export default class Panel extends Component {
     return (
       <div className="main-view">
         <div className="floor-marker-main">
-          <FloorMarker currentFloor={this.state.currentFloor} />
+          <FloorMarker
+            message={this.state.message}
+            currentFloor={this.state.currentFloor}
+          />
         </div>
         <div className="doors-and-panel-main">
           <Doors />
