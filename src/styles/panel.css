@@ -45,3 +45,6 @@
     cursor: pointer;
 }
 
+.on {
+    border-color: red;
+}

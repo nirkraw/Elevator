@@ -15,8 +15,6 @@ export default class Panel extends Component {
     };
 
     this.addFloor = this.addFloor.bind(this);
-    this.openHandler = this.openHandler.bind(this);
-    this.nextFloor = this.nextFloor.bind(this);
   }
 
   createPanel() {
@@ -24,11 +22,11 @@ export default class Panel extends Component {
       .fill()
       .map((_, i) =>
         i !== 0 ? (
-          <div className="floor-button" key={i} onClick={this.addFloor}>
+          <div className="floor-button" id={i} key={i} onClick={this.addFloor}>
             <h1>{i}</h1>
           </div>
         ) : (
-          <div className="floor-button" key={i} onClick={this.addFloor}>
+          <div className="floor-button" id={i} key={i} onClick={this.addFloor}>
             <h1>L</h1>
           </div>
         )
@@ -39,6 +37,7 @@ export default class Panel extends Component {
     e.preventDefault();
     const floorsPressed = this.state.floorsPressed;
     const newFloor = e.target.innerText;
+    e.currentTarget.classList.add("on");
 
     if (floorsPressed.includes(newFloor)) return;
 
@@ -64,13 +63,13 @@ export default class Panel extends Component {
     let currentFloor = this.state.currentFloor;
     let destinationFloor =
       this.state.floorsPressed[0] === "L" ? "0" : this.state.floorsPressed[0];
- 
+
     if (currentFloor.toString() === destinationFloor) {
-        this.setState({ floorsPressed: this.state.floorsPressed.slice(1) });
-        this.openDoors();
+      this.setState({ floorsPressed: this.state.floorsPressed.slice(1) });
+      this.openDoors();
     } else {
-        if (destinationFloor > currentFloor) {
-            currentFloor++;
+      if (destinationFloor > currentFloor) {
+        currentFloor++;
       } else {
         currentFloor--;
       }
@@ -89,7 +88,10 @@ export default class Panel extends Component {
     rightDoor.classList.remove("close");
     leftDoor.classList.add("open");
     rightDoor.classList.add("open");
+
+    const currentButton = document.getElementById(this.state.currentFloor);
     setTimeout(() => {
+      currentButton.classList.remove("on");
       this.closeDoors(leftDoor, rightDoor);
     }, 4000);
   }
@@ -103,11 +105,6 @@ export default class Panel extends Component {
     setTimeout(() => {
       this.nextFloor();
     }, 4000);
-
-  }
-
-  openHandler(boolean) {
-    this.setState({ open: boolean });
   }
 
   render() {
@@ -118,13 +115,7 @@ export default class Panel extends Component {
           <FloorMarker currentFloor={this.state.currentFloor} />
         </div>
         <div className="doors-and-panel-main">
-          <Doors
-            currentFloor={this.state.currentFloor}
-            floorsPressed={this.state.floorsPressed}
-            open={this.state.open}
-            openHandler={this.openHandler}
-            nextFloor={this.nextFloor}
-          />
+          <Doors />
           <div className="main-panel-box">{panel}</div>
         </div>
       </div>
