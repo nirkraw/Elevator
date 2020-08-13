@@ -13,3 +13,31 @@
     border: 5px solid black;
 }
 
+.open {
+    animation: open;
+    animation-duration: 4.2s;
+}
+
+.close {
+    animation: close;
+    animation-duration: 4.0s;
+}
+
+
+@keyframes open {
+  from {
+    width: 50%;
+  }
+  to {
+    width: 2%;
+  }
+}
+
+@keyframes close {
+  from {
+    width: 2%;
+  }
+  to {
+    width:  50%;
+  }
+}
