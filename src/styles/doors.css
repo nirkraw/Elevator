@@ -1,0 +1,15 @@
+.elevator-frame {
+    border: 5px solid black;
+    height: 1000px;
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.door-left, .door-right {
+    height: 100%;
+    width: 50%;
+    background-color: gray;
+    border: 5px solid black;
+}
+
