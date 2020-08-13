@@ -35,7 +35,7 @@ export default class Panel extends Component {
     e.preventDefault();
     const floorsPressed = this.state.floorsPressed;
     const newFloor = e.target.innerText;
-    
+   
     if(floorsPressed.includes(newFloor)) return
     
     floorsPressed.push(newFloor);
@@ -44,10 +44,36 @@ export default class Panel extends Component {
     });
     
     this.setState({floorsPressed});
+    this.nextFloor();
+  }
+
+
+  nextFloor() {
+    setTimeout(() => {
+        let currentFloor = this.state.currentFloor;
+        let destinationFloor = this.state.floorsPressed[0]
+        if(currentFloor.toString() === destinationFloor) {
+            const floorsPressed = this.state.floorsPressed;
+            floorsPressed.shift();
+            this.setState({floorsPressed});
+            if(this.state.floorsPressed.length > 1) {
+                this.nextFloor();
+            }
+        } else {
+            if(destinationFloor > currentFloor) {
+                currentFloor++;
+            } else {
+                currentFloor--
+            }
+            this.setState({currentFloor})
+            this.nextFloor();
+        }
+    }, 1000);
   }
 
 
   render() {
+
     const panel = this.createPanel();
     return (
       <div className="main-view">
