@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FloorMarkerCSS from "../styles/floorMarker.css";
+import "../styles/floorMarker.css";
 
 export default class FloorMarker extends Component {
   render() {

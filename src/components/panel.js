@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PanelCSS from "../styles/panel.css";
+import "../styles/panel.css";
 import Doors from "./doors.js";
 import FloorMarker from "./floorMarker";
 
