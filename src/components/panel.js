@@ -10,31 +10,22 @@ export default class Panel extends Component {
     this.state = {
       currentFloor: 0,
       floorsPressed: [],
-      open: false,
       moving: false,
       message: null
     };
-
-    this.addFloor = this.addFloor.bind(this);
   }
 
   createPanel() {
     return Array(8)
       .fill()
-      .map((_, i) =>
-        i !== 0 ? (
-          <div className="floor-button" id={i} key={i} onClick={this.addFloor}>
-            <h1>{i}</h1>
-          </div>
-        ) : (
-          <div className="floor-button" id={i} key={i} onClick={this.addFloor}>
-            <h1>L</h1>
-          </div>
-        )
-      );
+      .map((_, i) => (
+        <div className="floor-button" id={i} key={i} onClick={this.addFloor}>
+          {i !== 0 ? <h1>{i}</h1> : <h1>L</h1> }
+        </div>
+      ));
   }
 
-  addFloor(e) {
+  addFloor = (e) => {
     e.preventDefault();
     const floorsPressed = this.state.floorsPressed;
     const newFloor = e.target.innerText;
@@ -119,7 +110,7 @@ export default class Panel extends Component {
           />
         </div>
         <div className="doors-and-panel-main">
-          <Doors />
+          <Doors/>
           <div className="main-panel-box">{panel}</div>
         </div>
       </div>
