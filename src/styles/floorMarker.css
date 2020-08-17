@@ -1,11 +1,11 @@
 .floor-marker-outer {
-    height: 60px;
-    width: 400px;
+    height: 5%;
+    width: 20%;
     border: 5px solid black;
     display: flex;
     justify-content: center;
     background-color: gray;
-    margin-top: 50px;
+    
 }
 
 .floor-marker-box {
@@ -19,8 +19,9 @@
 
 .floor-marker-box > h1 {
     color: red;
+    font-size: 25px;
 }
 
 #message {
-    font-size: 22px;
+    font-size: 18px;
 }

@@ -1,28 +1,32 @@
-.elevator-frame {
-    border: 5px solid black;
-    height: 1000px;
-    width: 1000px;
-    display: flex;
-    justify-content: space-between;
+.doors-main-div {
+  position: relative;
+  height: 80%;
+  width: 40%;
+  margin-top: 3%;
+  background-image: url(../assets/matrixhallway.jpg);
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
 }
 
-.door-left, .door-right {
-    height: 100%;
-    width: 50%;
-    background-color: gray;
-    border: 5px solid black;
+.door-left,
+.door-right {
+  height: 100%;
+  width: 100%;
+  background-color: gray;
+  border: 5px solid black;
 }
 
 .open {
-    animation: open;
-    animation-duration: 4.2s;
+  animation: open;
+  animation-duration: 4.2s;
 }
 
 .close {
-    animation: close;
-    animation-duration: 4.0s;
+  animation: close;
+  animation-duration: 4s;
 }
-
 
 @keyframes open {
   from {
@@ -38,17 +42,7 @@
     width: 2%;
   }
   to {
-    width:  50%;
+    width: 50%;
   }
 }
-.doors-main-div {
-  position: relative;
-}
-.hallway {
-  height: 1000px;
-  width: 1000px;
-  z-index: -1;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
+
