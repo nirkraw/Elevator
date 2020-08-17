@@ -16,6 +16,7 @@ export default class Panel extends Component {
   }
 
   createPanel() {
+    //create the buttons on the panel box and give each one an id equivalent to their resepective floors
     return Array(8)
       .fill()
       .map((_, i) => (
@@ -28,50 +29,49 @@ export default class Panel extends Component {
   addFloor = (e) => {
     e.preventDefault();
     const floorsPressed = this.state.floorsPressed;
-    const newFloor = e.target.innerText;
-    e.currentTarget.classList.add("on");
+    const newFloor = Number(e.currentTarget.id); //use floor id and convert to number
+    e.currentTarget.classList.add("on"); //add red light around destination buttons
 
-    if (floorsPressed.includes(newFloor)) return;
-
-    floorsPressed.push(newFloor);
-    floorsPressed.sort(function (a, b) {
-      return a - b;
-    });
-
+    if (floorsPressed.includes(newFloor)) return; //if pressing an existing floor nothing happens
+    floorsPressed.unshift(newFloor); //add new floor to floors array
     this.setState({ floorsPressed, destinationFloor: floorsPressed[0] });
 
-    if (!this.state.moving) {
+    if (!this.state.moving) { // if elevator is not moving then it starts movement by going to next floor
       this.nextFloor();
     }
   };
 
   nextFloor() {
-    if (this.state.floorsPressed.length === 0) {
+    const { floorsPressed } = this.state;
+    if (floorsPressed.length === 0) { //if there are no floors in the queue it marks elevator as not moving
       this.setState({ moving: false });
       return;
     }
     this.setState({ moving: true });
 
     let currentFloor = this.state.currentFloor;
-    let destinationFloor =
-      this.state.floorsPressed[0] === "L" ? "0" : this.state.floorsPressed[0];
+    const destinationFloor = floorsPressed[0];
 
-    if (currentFloor.toString() === destinationFloor) {
+    if (floorsPressed.includes(currentFloor)) { //if we pass a floor that is on the queue then stop
+      const currentFloorIndex = floorsPressed.indexOf(currentFloor);
+      const newFloorsPressed = floorsPressed
+        .slice(0, currentFloorIndex)
+        .concat(floorsPressed.slice(currentFloorIndex + 1)); // remove floor from queue 
       this.setState({
-        floorsPressed: this.state.floorsPressed.slice(1),
-        message: "You Have Arrived",
+        floorsPressed: newFloorsPressed,
+        message: "You Have Arrived", //add message to send to floor marker 
       });
       this.openDoors();
     } else {
       if (destinationFloor > currentFloor) {
         currentFloor++;
       } else {
-        currentFloor--;
+        currentFloor--; //increment or decrement appropriately based on destination direction 
       }
       this.setState({ currentFloor });
       setTimeout(() => {
         this.nextFloor();
-      }, 1000);
+      }, 1000); //wait one second between floors to simulate elevator
     }
   }
 
@@ -79,14 +79,14 @@ export default class Panel extends Component {
     const leftDoor = document.getElementsByClassName("door-left")[0];
     const rightDoor = document.getElementsByClassName("door-right")[0];
 
-    leftDoor.classList.remove("close");
+    leftDoor.classList.remove("close"); //remove potential closed property from earlier 
     rightDoor.classList.remove("close");
-    leftDoor.classList.add("open");
+    leftDoor.classList.add("open"); // start open animation 
     rightDoor.classList.add("open");
 
     const currentButton = document.getElementById(this.state.currentFloor);
     setTimeout(() => {
-      currentButton.classList.remove("on");
+      currentButton.classList.remove("on"); //remove red light from button
       this.closeDoors(leftDoor, rightDoor);
     }, 4000);
   }
@@ -96,9 +96,9 @@ export default class Panel extends Component {
     rightDoor.classList.remove("open");
     leftDoor.classList.add("close");
     rightDoor.classList.add("close");
-    this.setState({ message: false });
+    this.setState({ message: false }); // remove message from floor marker
     setTimeout(() => {
-      this.nextFloor();
+      this.nextFloor(); //continues to next floor
     }, 4000);
   }
 
